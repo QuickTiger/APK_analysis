@@ -54,7 +54,8 @@ for line in api_result:
 	for api_info in score:
 		if api_info[0]==api.split("\n")[0] and not num=="0":
 			risk_score=risk_score+int(api_info[1])
-			print(api)
+			if int(api_info[1])!=0:
+				print(api.split('\n')[0]+"\t"+api_info[1])
 print(risk_score)
 
 
