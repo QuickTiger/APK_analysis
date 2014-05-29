@@ -32,13 +32,10 @@ os.system("java -jar smali/baksmali.jar -b -o /tmp/"+apk_name+"/smali /tmp/"+apk
 permissions=a.permissions
 permission_count=len(permissions)
 permission_sum = 0
-print(args.filename+" 的权限申请情况如下：")
 for item_permission in permissions:
 	for i in mani_info:
 		if item_permission==i[1]:
 			permission_sum = permission_sum + int(i[3])	
-			print(i[0]+'\t'+i[1]+'\t'+i[2])
-print(args.filename+" 的权限申请危险指数是："+str(permission_sum*10.0/permission_count))
 
 
 
@@ -90,8 +87,6 @@ tmpf1.close()
 api_result=open("/tmp/"+apk_name+"/api_result_tmp.txt")
 risk_score = 0
 risk_count = 0
-print("--------------------------------------------------           ")
-print(args.filename+" 的二进制代码中，危险API调用情况如下 :")
 for line in api_result:
 	num=line.split("\t")[0]
 	api=line.split("\t")[1]
@@ -100,7 +95,6 @@ for line in api_result:
 			risk_score=risk_score+int(api_info[1])
 			if int(api_info[1])!=0:
 				risk_count = risk_count + 1
-				print(api.split('\n')[0]+"\t"+api_info[1])
 
 
 
@@ -128,10 +122,8 @@ for line in apis_result:
 			risk_score=risk_score+int(apis_info[2])
 			if int(apis_info[2])!=0:
 				risk_count = risk_count + 1
-				print(api.split('\n')[0]+"\t"+apis_info[1]+"\t"+apis_info[2])
 
 
 
 
-print( args.filename+" 的二进制代码API 调用危险指数是:      "+str(risk_score))
-
+print( args.filename+"API: "+str(risk_score)+"\t API Rate:"+str(risk_score*10.0/risk_count)+"\t permission"+str(permission_sum*10.0/permission_count))
